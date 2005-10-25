@@ -1,0 +1,43 @@
+Revision history for Perl extension JavaScript::RPC::Server::CGI.
+
+0.1   Wed Oct 05 2005
+	- Fixed multi-line parameter handling (thanks to Tyler MacDonald)
+	- Switched to Module::Build
+
+0.06  Wed Mar 02 11:25:16 2005
+	- added pod_coverage test
+
+0.05  Wed Aug 11 10:21:30 2004
+	- Subs no longer need to return error() or result()
+	  just die() or return()
+	- query() now sets env() at the same time
+	- Added new tests
+	- Updated demo script
+
+0.04  Fri Jan 30 21:24:36 2004
+	- Added missing _js_escape() sub
+	- Documenation fixed
+	- env() now returns a hash on set
+	- Added get_new_query() - used by query()
+
+0.03  Sat Jan 24 22:54:22 2004
+	- Fixed example programs
+	- Added string escaping to error()
+	- Fixed env()
+
+0.02  Sat Jan 17 12:36:32 2004
+	*** IMPORTANT
+	- This module must now be subclassed in order to add
+	  custom methods (the method() sub has been removed)
+	***
+	- Added error_message method
+	- Renamed info() to env()
+	- Added ABSTRACT to Makefile.PL
+	- Updated demo to work with new module format
+	- Updated README
+	- Query object problems have magically gone away
+
+0.01  Thu Jan 15 10:56:07 2004
+	- original version; created by h2xs 1.23 with options
+		-X -n JavaScript::RPC::Server::CGI
+

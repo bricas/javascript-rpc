@@ -1,0 +1,16 @@
+Build.PL
+Changes
+demo/jsrpc.pl
+demo/jsrsClient.js
+demo/test.html
+lib/JavaScript/RPC/Server/CGI.pm
+META.yml
+MANIFEST
+t/01-use.t
+t/02-query.t
+t/03-env.t
+t/04-result.t
+t/05-error.t
+t/06-process.t
+t/98-pod_coverage.t
+t/99-pod.t

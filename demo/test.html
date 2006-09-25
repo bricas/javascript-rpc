@@ -1,20 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-	<title>JavaScript Remote Procedure Call Demo</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<meta http-equiv="Content-Language" content="en-us" />
-	<script type="text/javascript" src="jsrsClient.js"></script>
-	<script type="text/javascript">
-	function runTest( inputA, inputB, operator ) {
-		jsrsPOST = document.forms[ 'frmPost' ][ 'chkPost' ].checked;
-		jsrsExecute( 'jsrpc.pl', myCallback, operator, Array( inputA, inputB ) );
-	}
+    <title>JavaScript Remote Procedure Call Demo</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <meta http-equiv="Content-Language" content="en-us" />
+    <script type="text/javascript" src="jsrsClient.js"></script>
+    <script type="text/javascript">
+    function runTest( inputA, inputB, operator ) {
+        jsrsPOST = document.forms[ 'frmPost' ][ 'chkPost' ].checked;
+        jsrsExecute( 'jsrpc.pl', myCallback, operator, Array( inputA, inputB ) );
+    }
 
-	function myCallback( returnstring ){
-		alert( returnstring );
-	} 
-	</script>
+    function myCallback( returnstring ){
+        alert( returnstring );
+    } 
+    </script>
 </head>
 <body>
 <h1>Javascript Remote Procedure Call Demo</h1>
@@ -23,13 +23,13 @@
 <p><input name="chkPost" type="checkbox" /> use POST</p>
 </form>
 <form action="test.html" onsubmit="runTest( this.inputA.value, this.inputB.value, this.operator.options[ this.operator.selectedIndex ].value ); return false;">
-	<input type="text" name="inputA" />
-	<select name="operator">
-		<option value="add"> + </option>
-		<option value="subtract"> - </option>
-	</select>
-	<input type="text" name="inputB" />
-	<input type="submit" value="Compute" />
+    <input type="text" name="inputA" />
+    <select name="operator">
+        <option value="add"> + </option>
+        <option value="subtract"> - </option>
+    </select>
+    <input type="text" name="inputB" />
+    <input type="submit" value="Compute" />
 </form>
 </body>
 </html>

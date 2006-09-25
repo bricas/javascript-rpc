@@ -3,8 +3,8 @@ Changes
 demo/jsrpc.pl
 demo/jsrsClient.js
 demo/test.html
+lib/JavaScript/RPC.pm
 lib/JavaScript/RPC/Server/CGI.pm
-META.yml
 MANIFEST
 t/01-use.t
 t/02-query.t

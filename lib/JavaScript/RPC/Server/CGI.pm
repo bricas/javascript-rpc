@@ -1,6 +1,8 @@
 package JavaScript::RPC::Server::CGI;
 
 use strict;
+use warnings;
+
 use Carp;
 
 our $VERSION = '0.2';
@@ -11,43 +13,43 @@ JavaScript::RPC::Server::CGI - Remote procedure calls from JavaScript
 
 =head1 SYNOPSIS
 
-	package MyJSRPC;
-	
-	use Carp;
-	use base qw( JavaScript::RPC::Server::CGI );
-	
-	sub add {
-		my $self = shift;
-		my @args = @_;
-		unless(
-			@args == 2 and
-			$args[ 0 ] =~ /^\d+$/ and
-			$args[ 1 ] =~ /^\d+$/
-		) {
-			croak( 'inputs must be digits only' ); 
-		}
-		return $args[ 0 ] + $args[ 1 ];
-	}
-	
-	sub subtract {
-		my $self = shift;
-		my @args = @_;
-		unless(
-			@args == 2 and
-			$args[ 0 ] =~ /^\d+$/ and
-			$args[ 1 ] =~ /^\d+$/
-		) {
-			croak( 'inputs must be digits only' );
-		}
-		return $args[ 0 ] - $args[ 1 ];
-	}
-	
-	package main;
-	
-	use strict;
-	
-	my $server = MyJSRPC->new;
-	$server->process;
+    package MyJSRPC;
+    
+    use Carp;
+    use base qw( JavaScript::RPC::Server::CGI );
+    
+    sub add {
+        my $self = shift;
+        my @args = @_;
+        unless(
+            @args == 2 and
+            $args[ 0 ] =~ /^\d+$/ and
+            $args[ 1 ] =~ /^\d+$/
+        ) {
+            croak( 'inputs must be digits only' ); 
+        }
+        return $args[ 0 ] + $args[ 1 ];
+    }
+    
+    sub subtract {
+        my $self = shift;
+        my @args = @_;
+        unless(
+            @args == 2 and
+            $args[ 0 ] =~ /^\d+$/ and
+            $args[ 1 ] =~ /^\d+$/
+        ) {
+            croak( 'inputs must be digits only' );
+        }
+        return $args[ 0 ] - $args[ 1 ];
+    }
+    
+    package main;
+    
+    use strict;
+    
+    my $server = MyJSRPC->new;
+    $server->process;
 
 =head1 DESCRIPTION
 
@@ -65,17 +67,17 @@ distribution.
 
 To install this module via Module::Build:
 
-	perl Build.PL
-	./Build         # or `perl Build`
-	./Build test    # or `perl Build test`
-	./Build install # or `perl Build install`
+    perl Build.PL
+    ./Build         # or `perl Build`
+    ./Build test    # or `perl Build test`
+    ./Build install # or `perl Build install`
 
 To install this module via ExtUtils::MakeMaker:
 
-	perl Makefile.PL
-	make
-	make test
-	make install
+    perl Makefile.PL
+    make
+    make test
+    make install
 
 =head1 METHODS
 
@@ -87,14 +89,14 @@ this time.
 =cut
 
 sub new {
-	my $class = shift;
-	my $self  = {
-		env => {}
-	};
+    my $class = shift;
+    my $self  = {
+        env => {}
+    };
 
-	bless $self, $class;
+    bless $self, $class;
 
-	return $self;
+    return $self;
 }
 
 =head2 query()
@@ -105,39 +107,39 @@ env() data.
 =cut
 
 sub query {
-	my $self  = shift;
-	my $query = shift;
+    my $self  = shift;
+    my $query = shift;
 
-	unless( $query or $self->{ query } ) {
-		$query = $self->get_new_query;
-	}
+    unless( $query or $self->{ query } ) {
+        $query = $self->get_new_query;
+    }
 
-	if( $query ) {
-		my $method  = $query->param( 'F' ) || undef;
-		my $uid     = $query->param( 'U' ) || undef;
-		my $context = $query->param( 'C' ) || undef;
+    if( $query ) {
+        my $method  = $query->param( 'F' ) || undef;
+        my $uid     = $query->param( 'U' ) || undef;
+        my $context = $query->param( 'C' ) || undef;
 
-		my( $param, @params );
-		my $i = 0;
+        my( $param, @params );
+        my $i = 0;
 
-		# Extract parameters
-		while( defined( $param = $query->param( "P$i" ) ) ) {
-			$param =~ s/^\[(.*)\]$/$1/s;
-			push @params, $param;
-			$i++;
-		}
+        # Extract parameters
+        while( defined( $param = $query->param( "P$i" ) ) ) {
+            $param =~ s/^\[(.*)\]$/$1/s;
+            push @params, $param;
+            $i++;
+        }
 
-		$self->env(
-			method  => $method,
-			uid     => $uid,
-			context => $context,
-			params  => \@params
-		);
+        $self->env(
+            method  => $method,
+            uid     => $uid,
+            context => $context,
+            params  => \@params
+        );
 
-		$self->{ query } = $query;
-	}
+        $self->{ query } = $query;
+    }
 
-	return $self->{ query };
+    return $self->{ query };
 }
 
 =head2 get_new_query()
@@ -147,20 +149,20 @@ query() method. This method should only be used if you want to supply
 a query object other than the standard CGI.pm object. However, it must
 be a CGI.pm compatible object. Here's an example using CGI::Simple.
 
-	sub get_new_query {
-		require CGI::Simple;
-		my $q = CGI::Simple->new();
+    sub get_new_query {
+        require CGI::Simple;
+        my $q = CGI::Simple->new();
 
-		return $q;
-	}
+        return $q;
+    }
 
 =cut
 
 sub get_new_query {
-	require CGI;
-	my $q = CGI->new();
+    require CGI;
+    my $q = CGI->new();
 
-	return $q;
+    return $q;
 }
 
 =head2 env()
@@ -183,24 +185,24 @@ resulting structure contains four items:
 =cut
 
 sub env {
-	my $self  = shift;
+    my $self  = shift;
 
-	if( @_ ) {
-		if( @_ % 2 == 0 ) {
-			my %env  = @_;
-			for( keys %env ) {
-				$self->{ env }->{ $_ } = $env{ $_ };
-			}
-		}
-		else {
-			return $self->{ env }->{ $_[ 0 ] };
-		}
-	}
-	else {
-		$self->query;
-	}
+    if( @_ ) {
+        if( @_ % 2 == 0 ) {
+            my %env  = @_;
+            for( keys %env ) {
+                $self->{ env }->{ $_ } = $env{ $_ };
+            }
+        }
+        else {
+            return $self->{ env }->{ $_[ 0 ] };
+        }
+    }
+    else {
+        $self->query;
+    }
 
-	return %{ $self->{ env } };
+    return %{ $self->{ env } };
 }
 
 =head2 error_message()
@@ -210,12 +212,12 @@ Get / sets the error message sent to the client if an error occurred.
 =cut
 
 sub error_message {
-	my $self    = shift;
-	my $message = shift;
+    my $self    = shift;
+    my $message = shift;
 
-	$self->{ error_message } = $message if $message;
+    $self->{ error_message } = $message if $message;
 
-	return $self->{ error_message };
+    return $self->{ error_message };
 }
 
 =head2 process()
@@ -232,15 +234,15 @@ caller if it died, or return a valid result payload on success.
 =cut
 
 sub process {
-	my $self    = shift;
-	my $query   = $self->query;
-	my $method  = $self->env( 'method' );
-	my @params  = @{ $self->env( 'params' ) };
+    my $self    = shift;
+    my $query   = $self->query;
+    my $method  = $self->env( 'method' );
+    my @params  = @{ $self->env( 'params' ) };
 
-	print $query->header;
+    print $query->header;
 
-	return $self->error( 'No function specified' ) unless $method;
-	return $self->error( 'Specified function not implemented' ) unless $self->can( $method );
+    return $self->error( 'No function specified' ) unless $method;
+    return $self->error( 'Specified function not implemented' ) unless $self->can( $method );
 
         eval {
                 return $self->result( $self->$method( @params ) );
@@ -257,23 +259,23 @@ automatically call error_message() for you.
 =cut
 
 sub error {
-	my $self    = shift;
-	my $message = shift;
+    my $self    = shift;
+    my $message = shift;
         $message    =~ s/(.+) at (.+?)\n*$/$1/;
         my $msg_esc = _js_escape( $message );
-	my %env     = $self->env;
+    my %env     = $self->env;
 
-	$self->error_message( $message );
-	carp( $message );
+    $self->error_message( $message );
+    carp( $message );
 
-	print <<"EO_ERROR";
+    print <<"EO_ERROR";
 <html>
 <head></head>
 <body onload="p = document.layers?parentlayer:window.parent; p.jsrsError( '$env{ context }', '$msg_esc' );">$message</body>
 </html>
 EO_ERROR
 
-	return 0;
+    return 0;
 }
 
 =head2 result()
@@ -283,11 +285,11 @@ Returns a valid result payload to the client and true to the caller.
 =cut
 
 sub result {
-	my $self    = shift;
-	my $message = shift;
-	my %env     = $self->env;
+    my $self    = shift;
+    my $message = shift;
+    my %env     = $self->env;
 
-	print <<"EO_RESULT";
+    print <<"EO_RESULT";
 <html>
 <head></head>
 <body onload="p = document.layers?parentLayer:window.parent; p.jsrsLoaded( '$env{ context }' );">jsrsPayload:<br />
@@ -298,7 +300,7 @@ sub result {
 </html>
 EO_RESULT
 
-	return 1;
+    return 1;
 }
 
 =head1 SEE ALSO
@@ -319,7 +321,7 @@ EO_RESULT
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright 2005 by Brian Cassidy
+Copyright 2006 by Brian Cassidy
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself. 

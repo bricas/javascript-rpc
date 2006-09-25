@@ -1,7 +1,7 @@
 use Test::More tests => 3;
 
 BEGIN {
-	use_ok( 'JavaScript::RPC::Server::CGI' )
+    use_ok( 'JavaScript::RPC::Server::CGI' )
 };
 
 use strict;
@@ -13,25 +13,25 @@ my $server = JavaScript::RPC::Server::CGI->new;
 isa_ok( $server, 'JavaScript::RPC::Server::CGI' );
 
 my $query = CGI->new( {
-	C  => 'jsrs6',
-	F  => 'add',
-	P0 => '[0]',
-	P1 => '[1]',
-	U  => '1092142818812'
+    C  => 'jsrs6',
+    F  => 'add',
+    P0 => '[0]',
+    P1 => '[1]',
+    U  => '1092142818812'
 } );
 
 $server->query( $query );
 
 SKIP: {
-	eval "use IO::Capture::Stdout";
-	skip 'IO::Capture::Stdout required', 1 if $@;
+    eval "use IO::Capture::Stdout";
+    skip 'IO::Capture::Stdout required', 1 if $@;
 
-	my $capture = IO::Capture::Stdout->new;
-	$capture->start;
-	$server->result( 1 );
-	$capture->stop;
-	my @lines = $capture->read;
-	my $text  = <<EORESULT;
+    my $capture = IO::Capture::Stdout->new;
+    $capture->start;
+    $server->result( 1 );
+    $capture->stop;
+    my @lines = $capture->read;
+    my $text  = <<EORESULT;
 <html>
 <head></head>
 <body onload="p = document.layers?parentLayer:window.parent; p.jsrsLoaded( 'jsrs6' );">jsrsPayload:<br />
@@ -42,5 +42,5 @@ SKIP: {
 </html>
 EORESULT
 
-	is( join( '', @lines ), $text );
+    is( join( '', @lines ), $text );
 }

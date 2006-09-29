@@ -1,6 +1,9 @@
 package JavaScript::RPC;
 
-our $VERSION = '0.2';
+use strict;
+use warnings;
+
+our $VERSION = '0.3';
 
 =head1 NAME
 

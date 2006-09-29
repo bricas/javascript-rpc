@@ -1,5 +1,8 @@
 Revision history for Perl extension JavaScript::RPC.
 
+0.3   Fri Sep 29 2006
+    - added strictures to JavaScript/RPC.pm for CPANTS' sake
+
 0.2   Mon Sep 25 2006
     - Added JavaScript/RPC.pm
     - Added deprecation notice
